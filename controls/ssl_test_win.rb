@@ -97,6 +97,21 @@ control 'ssl2' do
   end
 end
 
+control 'ssl3' do
+  title 'Disable SSL 3 from all exposed SSL ports.'
+  impact 1.0
+  only_if { sslports.length > 0 }
+
+  sslports.each do |sslport|
+    # create a description
+    proc_desc = "on node == #{target_hostname} running #{sslport[:socket].process.inspect} (#{sslport[:socket].pid})"
+    describe ssl(sslport).protocols('ssl3') do
+      it(proc_desc) { should_not be_enabled }
+      it { should_not be_enabled }
+    end
+  end
+end
+
 
 #######################################################
 # Symmetric Encryption Method (Enc) Tests             #
