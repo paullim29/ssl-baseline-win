@@ -127,6 +127,21 @@ control 'tls1.0' do
   end
 end
 
+control 'tls1.1' do
+  title 'Disable TLS 1.1 on exposed ports.'
+  impact 0.5
+  only_if { sslports.length > 0 }
+
+  sslports.each do |sslport|
+    # create a description
+    proc_desc = "on node == #{target_hostname} running #{sslport[:socket].process.inspect} (#{sslport[:socket].pid})"
+    describe ssl(sslport).protocols('tls1.1') do
+      it(proc_desc) { should_not be_enabled }
+      it { should_not be_enabled }
+    end
+  end
+end
+
 
 #######################################################
 # Symmetric Encryption Method (Enc) Tests             #
