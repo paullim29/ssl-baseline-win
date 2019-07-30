@@ -13,5 +13,5 @@ The tests are based on
 Requires [InSpec](https://github.com/chef/inspec) 1.21.0 or newer for execution:
 
 ```
-$ git clone https://github.com/dev-sec/ssl-baseline
+$ git clone https://github.com/paullim29/ssl-baseline-win
 $ inspec exec ssl-baseline-win
